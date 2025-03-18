@@ -3,10 +3,16 @@
 import json
 import requests
 
+def load_config(filename="config.json"):
+    with open(filename, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+config = load_config()
+
 # ------------------------------
-# API Domain 與 Endpoint 配置
+# 定義各 API 的 URL、描述與參數
 # ------------------------------
-api_domain = "https://k6oayrgulgb5sasvwj3tsy7l7u0tikfd.lambda-url.ap-northeast-1.on.aws"
+api_domain = config.get("api_domain")
 
 VACANCIES_API_URL = f"{api_domain}/api/v3/tools/interview_test/taiwan_hotels/hotel/vacancies"
 NEARBY_SEARCH_API_URL = f"{api_domain}/api/v3/tools/external/gcp/places/nearby_search_with_query"
@@ -16,7 +22,7 @@ NEARBY_SEARCH_API_URL = f"{api_domain}/api/v3/tools/external/gcp/places/nearby_s
 # 外部專用 API Key 設定
 # ------------------------------
 API_HEADERS = {
-    "Authorization": "DhDkXZkGXaYBZhkk1Z9m9BuZDJGy"
+    "Authorization": config.get("api_key")
 }
 
 # ------------------------------
